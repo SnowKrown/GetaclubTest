@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace KartGame.KartSystems
 {
+    [System.Serializable]
     public class ArcadeKart : MonoBehaviour
     {
         /// <summary>
