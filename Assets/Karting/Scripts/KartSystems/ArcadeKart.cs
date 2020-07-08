@@ -6,13 +6,30 @@ namespace KartGame.KartSystems
     [System.Serializable]
     public class ArcadeKart : MonoBehaviour
     {
+        [System.Serializable]
+        public class StatPowerUp : Powerup
+        {
+            public ArcadeKart.Stats modifiers;
+        }
+
+        [System.Serializable]
+        public class LoseControl : Powerup
+        {
+
+        }
+
+        [System.Serializable]
+        public class Jump : Powerup
+        {
+
+        }
+
         /// <summary>
         /// Contains parameters that can adjust the kart's behaviors temporarily.
         /// </summary>
         [System.Serializable]
-        public class StatPowerup
+        public class Powerup
         {
-            public ArcadeKart.Stats modifiers;
             public string PowerUpID;
             public float ElapsedTime;
             public float MaxTime;
@@ -128,7 +145,12 @@ namespace KartGame.KartSystems
 
         // can the kart move?
         bool canMove = true;
-        List<StatPowerup> activePowerupList = new List<StatPowerup>();
+        //The player has control of the kart?
+        private bool hasControl;
+        //the kart should be jump?
+        private bool shouldBeJump;
+
+        List<Powerup> activePowerupList = new List<Powerup>();
         GameObject lastGroundCollided = null;
         ArcadeKart.Stats finalStats;
 
@@ -158,15 +180,15 @@ namespace KartGame.KartSystems
             AirPercent = 1 - GroundPercent;
 
             // gather inputs
-            float accel = Input.y;
-            float turn = Input.x;
+            float accel = hasControl ? Input.y : 1;
+            float turn = hasControl ? Input.x : Random.Range(-1, 1);
 
             // apply vehicle physics
             GroundVehicle(minHeight);
+
             if (canMove)
-            {
                 MoveVehicle(accel, turn);
-            }
+
             GroundAirbourne();
 
             // animation
@@ -192,11 +214,17 @@ namespace KartGame.KartSystems
 
         void TickPowerups()
         {
+            //Set player control every tick
+            hasControl = true;
+
+            //Remove jump effect every tick
+            shouldBeJump = false;
+
             // remove all elapsed powerups
             activePowerupList.RemoveAll((p) => { return p.ElapsedTime > p.MaxTime; });
 
             // zero out powerups before we add them all up
-            var powerups = new Stats();
+            var statsPoweups = new Stats();
 
             // add up all our powerups
             for (int i = 0; i < activePowerupList.Count; i++)
@@ -207,11 +235,25 @@ namespace KartGame.KartSystems
                 p.ElapsedTime += Time.deltaTime;
 
                 // add up the powerups
-                powerups += p.modifiers;
+                if (p is StatPowerUp)
+                    statsPoweups += (p as StatPowerUp).modifiers;
+
+                //Disable movement if player no has control
+                if (p is LoseControl)
+                    hasControl = false;
+
+                if (p is Jump)
+                    shouldBeJump = true;
+            }
+
+            if (!hasControl)
+            {
+                statsPoweups.TopSpeed = 5;
+                statsPoweups.Steer = baseStats.Steer * 2;
             }
 
             // add powerups to our final stats
-            finalStats = baseStats + powerups;
+            finalStats = baseStats + statsPoweups;
 
             // clamp values in finalstats
             finalStats.Grip = Mathf.Clamp(finalStats.Grip, 0, 1);
@@ -277,10 +319,13 @@ namespace KartGame.KartSystems
         void GroundAirbourne()
         {
             // while in the air, fall faster
-            if (AirPercent >= 1)
+            if (AirPercent >= 1 && !shouldBeJump)
             {
                 Rigidbody.velocity += Physics.gravity * Time.deltaTime * finalStats.AddedGravity;
             }
+
+            if (AirPercent < 1 && shouldBeJump)
+                Rigidbody.velocity = new Vector3(Rigidbody.velocity.x, Rigidbody.velocity.y + 10, Rigidbody.velocity.z);
         }
 
         void MoveVehicle(float accelInput, float turnInput)
@@ -456,7 +501,7 @@ namespace KartGame.KartSystems
             }
         }
 
-        public void AddPowerup(StatPowerup statPowerup)
+        public void AddPowerup(Powerup statPowerup)
         {
             activePowerupList.Add(statPowerup);
         }

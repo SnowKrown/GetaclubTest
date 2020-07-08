@@ -2,9 +2,9 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class ArcadeKartPowerup : MonoBehaviour {
+public class ArcadeKartStatsPowerup : MonoBehaviour {
 
-    public ArcadeKart.StatPowerup boostStats = new ArcadeKart.StatPowerup
+    public ArcadeKart.StatPowerUp boostStats = new ArcadeKart.StatPowerUp
     {
         MaxTime = 5
     };
