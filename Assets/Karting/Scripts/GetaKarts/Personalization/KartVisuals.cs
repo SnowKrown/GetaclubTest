@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace GetaKarts.Personalization
@@ -6,37 +7,61 @@ namespace GetaKarts.Personalization
     public class KartVisuals : MonoBehaviour
     {
         [SerializeField] private SkinnedMeshRenderer kartBody = default;
+        [SerializeField] private MeshRenderer[] tyres = default;
         [SerializeField] private Transform[] rimsParent = default;
         [SerializeField] private KartVisualData defaultVisualData = default;
         [SerializeField] private KartVisualLibrary visualLibrary = default;
 
-        private KartVisualData? currentVisualData = null;
+        private KartVisualData currentVisualData;
+        private List<Renderer> actualRims = new List<Renderer>();
 
-        private KartVisualData CurrentData
+        public KartVisualData SavedVisualData
         {
             get
             {
-                if (currentVisualData == null && PlayerPrefs.HasKey("KartVisualData"))
+                if (PlayerPrefs.HasKey("KartVisualData"))
                     currentVisualData = JsonUtility.FromJson<KartVisualData>(PlayerPrefs.GetString("KartVisualData"));
                 else
                     currentVisualData = defaultVisualData;
 
-                return currentVisualData.Value;
+                return currentVisualData;
             }
         }
 
         private void Awake()
         {
-            ApplyCurrentVisuals();
+            ApplyVisuals(SavedVisualData);
         }
 
-        private void ApplyCurrentVisuals()
+        public void ApplyVisuals(KartVisualData visuals)
         {
-            kartBody.material = visualLibrary.BodyMaterials[CurrentData.BodyMaterialIndex];
-            kartBody.material.color = CurrentData.BodyColor;
-            
+            currentVisualData = visuals;
+            ApplyRims();
+            ApplyBody();
+            Array.ForEach(tyres, t => t.material = visualLibrary.TyreMaterials[currentVisualData.tyreMaterialIndex]);
+        }
+
+        private void ApplyRims()
+        {
+            actualRims.ForEach(r => Destroy(r.gameObject));
+            actualRims.Clear();
+
+            foreach (Transform p in rimsParent)
+            {
+                KartVisualRim currentRim = visualLibrary.Rims[currentVisualData.rimIndex];
+                Renderer newRim = Instantiate(currentRim.Prefab, p, false).GetComponent<Renderer>();
+                newRim.material = currentRim.Materials[currentVisualData.rimMaterialIndex];
+                actualRims.Add(newRim);
+            }
+        }
+
+        private void ApplyBody()
+        {
+            kartBody.material = visualLibrary.BodyMaterials[currentVisualData.bodyMaterialIndex];
+            kartBody.material.color = visualLibrary.BodyColors[currentVisualData.bodyColorIndex];
+
             if (kartBody.material.IsKeywordEnabled("_EMISSION"))
-                kartBody.material.SetColor("_EmissionColor", CurrentData.BodyColor);
+                kartBody.material.SetColor("_EmissionColor", visualLibrary.BodyColors[currentVisualData.bodyColorIndex]);
         }
     }
 }
