@@ -1260,21 +1260,6 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 258.7
       objectReference: {fileID: 0}
-    - target: {fileID: 3079411562323351856, guid: 2c5fd2f47a2514711843f1f96c7b2f0c,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -32.649902
-      objectReference: {fileID: 0}
-    - target: {fileID: 3079411562323351856, guid: 2c5fd2f47a2514711843f1f96c7b2f0c,
-        type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 616.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 3079411562323351856, guid: 2c5fd2f47a2514711843f1f96c7b2f0c,
-        type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 600
-      objectReference: {fileID: 0}
     - target: {fileID: 3872878727614772150, guid: 2c5fd2f47a2514711843f1f96c7b2f0c,
         type: 3}
       propertyPath: m_text
@@ -1356,6 +1341,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5305162571060321750, guid: 2c5fd2f47a2514711843f1f96c7b2f0c,
+        type: 3}
+      propertyPath: criticalTimeVignetteMaxAlpha
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 5413294659218134590, guid: 2c5fd2f47a2514711843f1f96c7b2f0c,
         type: 3}
