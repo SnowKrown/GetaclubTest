@@ -55,8 +55,8 @@ namespace GetaKarts.GetaEditor
                 EditorGUILayout.BeginHorizontal();
 
                 if (GUILayout.Button("Save"))
-                    kart.baseStats = stats;
-                
+                    SaveStats();
+
                 if (GUILayout.Button("Discard"))
                     stats = kart.baseStats;
 
@@ -65,6 +65,12 @@ namespace GetaKarts.GetaEditor
 
                 EditorGUILayout.EndHorizontal();
             }
+        }
+
+        private void SaveStats()
+        {
+            kart.baseStats = stats;
+            AssetDatabase.SaveAssets();
         }
 
         private void DisplayStats()
