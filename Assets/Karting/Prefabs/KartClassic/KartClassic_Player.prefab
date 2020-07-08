@@ -506,7 +506,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseStats:
-    TopSpeed: 10
+    TopSpeed: 15
     Acceleration: 5
     ReverseSpeed: 5
     ReverseAcceleration: 5
@@ -1077,6 +1077,10 @@ PrefabInstance:
     - target: {fileID: 100064, guid: 078f73b46517318428ecaf8e7207124c, type: 3}
       propertyPath: m_Layer
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 100064, guid: 078f73b46517318428ecaf8e7207124c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 100066, guid: 078f73b46517318428ecaf8e7207124c, type: 3}
       propertyPath: m_Layer
