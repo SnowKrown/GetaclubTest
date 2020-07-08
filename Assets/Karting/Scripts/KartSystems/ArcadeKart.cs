@@ -18,6 +18,12 @@ namespace KartGame.KartSystems
 
         }
 
+        [System.Serializable]
+        public class Jump : Powerup
+        {
+
+        }
+
         /// <summary>
         /// Contains parameters that can adjust the kart's behaviors temporarily.
         /// </summary>
@@ -141,6 +147,9 @@ namespace KartGame.KartSystems
         bool canMove = true;
         //The player has control of the kart?
         private bool hasControl;
+        //the kart should be jump?
+        private bool shouldBeJump;
+
         List<Powerup> activePowerupList = new List<Powerup>();
         GameObject lastGroundCollided = null;
         ArcadeKart.Stats finalStats;
@@ -208,6 +217,9 @@ namespace KartGame.KartSystems
             //Set player control every tick
             hasControl = true;
 
+            //Remove jump effect every tick
+            shouldBeJump = false;
+
             // remove all elapsed powerups
             activePowerupList.RemoveAll((p) => { return p.ElapsedTime > p.MaxTime; });
 
@@ -229,6 +241,9 @@ namespace KartGame.KartSystems
                 //Disable movement if player no has control
                 if (p is LoseControl)
                     hasControl = false;
+
+                if (p is Jump)
+                    shouldBeJump = true;
             }
 
             if (!hasControl)
@@ -304,10 +319,13 @@ namespace KartGame.KartSystems
         void GroundAirbourne()
         {
             // while in the air, fall faster
-            if (AirPercent >= 1)
+            if (AirPercent >= 1 && !shouldBeJump)
             {
                 Rigidbody.velocity += Physics.gravity * Time.deltaTime * finalStats.AddedGravity;
             }
+
+            if (AirPercent < 1 && shouldBeJump)
+                Rigidbody.velocity = new Vector3(Rigidbody.velocity.x, Rigidbody.velocity.y + 10, Rigidbody.velocity.z);
         }
 
         void MoveVehicle(float accelInput, float turnInput)
