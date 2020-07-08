@@ -402,7 +402,7 @@ MonoBehaviour:
   m_LastFolders:
   - Assets/Karting/Prefabs/Props
   m_LastFoldersGridSize: -1
-  m_LastProjectPath: C:\Users\yatchi.lau\Documents\A$_Staging\Karting\0610_Kart_A$
+  m_LastProjectPath: D:\Unity Projects\GetaclubTest
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
