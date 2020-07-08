@@ -80,7 +80,6 @@ public class GameFlowManager : MonoBehaviour
         //run race countdown animation
         ShowRaceCountdownAnimation();
         StartCoroutine(ShowObjectivesRoutine());
-
         StartCoroutine(CountdownThenStartRaceRoutine());
     }
 

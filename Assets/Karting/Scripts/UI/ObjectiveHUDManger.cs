@@ -10,6 +10,8 @@ public class ObjectiveHUDManger : MonoBehaviour
     [Tooltip("Prefab for the primary objectives")]
     public PoolObjectDef secondaryObjectivePrefab;
 
+    [SerializeField] private bool showObjectivePanel = true;
+
     Dictionary<Objective, ObjectiveToast> m_ObjectivesDictionary;
 
     void Awake()
@@ -35,7 +37,8 @@ public class ObjectiveHUDManger : MonoBehaviour
 
         m_ObjectivesDictionary.Add(objective, toast);
 
-        objectivePanel.UpdateTable(toast.gameObject);
+        if (showObjectivePanel)
+            objectivePanel.UpdateTable(toast.gameObject);
     }
 
     public void UnregisterObjective(Objective objective)
