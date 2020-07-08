@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657958, g: 0.49641335, b: 0.5748166, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657975, g: 0.49641347, b: 0.5748174, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -96,6 +96,7 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
+    m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
   m_UseShadowmask: 1
 --- !u!196 &4
@@ -646,8 +647,9 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 247995403}
   m_Enabled: 1
-  serializedVersion: 9
+  serializedVersion: 10
   m_Type: 1
+  m_Shape: 0
   m_Color: {r: 1, g: 0.74932754, b: 0.48584908, a: 1}
   m_Intensity: 0.7
   m_Range: 10
@@ -1134,7 +1136,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '[Name Your Game]'
+  m_text: Geta Karts
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 75063828274bdb145a55f6dd2f22e8b2, type: 2}
   m_sharedMaterial: {fileID: 21098970014090698, guid: 75063828274bdb145a55f6dd2f22e8b2,
@@ -1204,10 +1206,10 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1834908384}
-    characterCount: 16
+    characterCount: 10
     spriteCount: 0
-    spaceCount: 2
-    wordCount: 3
+    spaceCount: 1
+    wordCount: 2
     linkCount: 0
     lineCount: 1
     pageCount: 1
@@ -1800,11 +1802,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3474853878770434550, guid: 119b2c3ccac5c4160afc384f0909ee65,
-        type: 3}
-      propertyPath: m_Name
-      value: Kart_Display
-      objectReference: {fileID: 0}
     - target: {fileID: 3474853878770434540, guid: 119b2c3ccac5c4160afc384f0909ee65,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1874,6 +1871,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 1.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3474853878770434550, guid: 119b2c3ccac5c4160afc384f0909ee65,
+        type: 3}
+      propertyPath: m_Name
+      value: Kart_Display
       objectReference: {fileID: 0}
     - target: {fileID: 3474853879522815745, guid: 119b2c3ccac5c4160afc384f0909ee65,
         type: 3}
