@@ -40,7 +40,7 @@ namespace GetaKarts.Personalization.UI
             current--;
 
             if (current < 0)
-                current = length;
+                current = length - 1;
 
             RefreshText();
             ValueChanged?.Invoke(current);
